@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyectos | Diego Ordóñez</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/styles.css") }}">
+    
+    <!-- Icono Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename="images/favicon.ico")}}" type="image/x-icon">
+</head>
+<body>
+    <div class="top-bar">
+        <i id="theme-icon" class="fa-solid fa-circle-half-stroke"></i>
+        <a href="{{ url_for('index') }}" class="btn-hola">Volver al inicio</a>
+    </div>
+
+    <section id="proyectos">
+        <h1>Mis Proyectos</h1>
+        <div class="proyectos-container">
+            <div class="proyecto-card">
+                <h2>Proyecto 1</h2>
+                <p>Descripción breve del proyecto 1.</p>
+                <a href="#" class="btn-proyecto">Ver más</a>
+            </div>
+            <div class="proyecto-card">
+                <h2>Proyecto 2</h2>
+                <p>Descripción breve del proyecto 2.</p>
+                <a href="#" class="btn-proyecto">Ver más</a>
+            </div>
+            <div class="proyecto-card">
+                <h2>Proyecto 3</h2>
+                <p>Descripción breve del proyecto 3.</p>
+                <a href="#" class="btn-proyecto">Ver más</a>
+            </div>
+        </div>
+    </section>
+    <script src="{{ url_for('static', filename="js/tema.js")}}"></script>
+</body>
+</html>
