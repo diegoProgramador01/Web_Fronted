@@ -2,7 +2,6 @@
 const avatar = document.getElementById("avatar");
 
 // Obtener la URL desde el atributo data-url del avatar
-const redirectUrl = avatar.dataset.url;
 
 // Crear una instancia de animación de GSAP (puedes pausar o reanudar según sea necesario)
 const hoverAnimation = gsap.timeline({ paused: true });
@@ -16,7 +15,7 @@ hoverAnimation
     .call(() => {
         // Redirigir solo si el cursor sigue sobre el avatar
         if (isHovering) {
-            window.location.href = redirectUrl;
+            window.location.href = "/sobre_mi.html";
         }
     });
 
