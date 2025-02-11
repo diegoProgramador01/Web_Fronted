@@ -21,6 +21,7 @@
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     
 </head>
+    
 <body>
     <div class="top-bar">
         <i id="theme-icon" class="fa-solid fa-circle-half-stroke"></i>
@@ -46,5 +47,27 @@
     </section>
 
     <script src="js/tema.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector(".form-contacto").addEventListener("submit", async function(event) {
+                event.preventDefault();
+        
+                const name = document.getElementById("name").value;
+                const email = document.getElementById("email").value;
+                const message = document.getElementById("message").value;
+        
+                const response = await fetch("https://web-backend-q6ff.onrender.com/send-message", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ name, email, message })
+                });
+        
+                const result = await response.json();
+                alert(result.success || result.error);
+            });
+        });
+        </script>
 </body>
 </html>
