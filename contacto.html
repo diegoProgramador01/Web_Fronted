@@ -32,42 +32,77 @@
     <section id="contacto">
         <h1>Contacto</h1>
         <p>¡Hablemos! Llena el formulario para enviarme un mensaje.</p>
-        <form action="#" class="form-contacto">
+        <form class="form-contacto">
             <label for="name">Nombre:</label>
-            <input type="text" id="name" name="name" placeholder="Tu nombre..." required>
+            <input type="text" id="name" name="name" placeholder="Tu nombre...">
 
             <label for="email">Correo electrónico:</label>
-            <input type="email" id="email" name="email" placeholder="Tu correo electrónico..." required>
+            <input type="email" id="email" name="email" placeholder="Tu correo electrónico...">
 
             <label for="message">Mensaje:</label>
-            <textarea id="message" name="message" rows="5" placeholder="Tu mensaje..." required></textarea>
+            <textarea id="message" name="message" rows="5" placeholder="Tu mensaje..."></textarea>
 
             <button type="submit" class="btn-enviar">Enviar</button>
         </form>
+        <p id="mensaje-estado" style="display: none; font-weight: bold; margin-top: 20px;"></p>
+
     </section>
 
     <script src="js/tema.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            document.querySelector(".form-contacto").addEventListener("submit", async function(event) {
-                event.preventDefault();
+            const form = document.querySelector(".form-contacto");
+            const mensajeEstado = document.getElementById("mensaje-estado");
+
+            if (!form) {
+                console.error("Formulario no encontrado en el DOM.");
+                return;
+            }
         
-                const name = document.getElementById("name").value;
-                const email = document.getElementById("email").value;
-                const message = document.getElementById("message").value;
+            form.addEventListener("submit", async function(event) {
+                event.preventDefault(); // Evita que el formulario se envíe como GET
         
-                const response = await fetch("https://web-backend-q6ff.onrender.com/send-message", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ name, email, message })
-                });
+                const name = document.getElementById("name").value.trim();
+                const email = document.getElementById("email").value.trim();
+                const message = document.getElementById("message").value.trim();
         
-                const result = await response.json();
-                alert(result.success || result.error);
+                if (!name || !email || !message) {
+                    mensajeEstado.style.color = "red";
+                    mensajeEstado.style.display = "block";
+                    mensajeEstado.textContent = "Por favor, completa todos los campos.";
+                    return;
+                }
+        
+                try {
+                    const response = await fetch("https://web-backend-q6ff.onrender.com/send-message", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ name, email, message })
+                    });
+        
+                    if (!response.ok) {
+                        throw new Error("Error en la respuesta del servidor.");
+                    }
+        
+                    const result = await response.json();
+                    mensajeEstado.style.color = "green";
+                    mensajeEstado.style.display = "block";
+                    mensajeEstado.textContent = "Mensaje enviado correctamente.";
+
+                    //Limpiar formulario después de enviar
+                    form.reset();
+
+                } catch (error) {
+                    console.error("Error al enviar el formulario:", error);
+                    mensajeEstado.style.display = "block";
+                    mensajeEstado.style.color = "red";
+                    mensajeEstado.textContent = "Hubo un problema al enviar el mensaje.";
+                }
             });
         });
         </script>
+        
 </body>
 </html>
