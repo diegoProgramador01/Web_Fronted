@@ -72,6 +72,7 @@
                     mensajeEstado.style.display = "block";
                     mensajeEstado.style.color = "red";
                     mensajeEstado.textContent = "Todos los campos son obligatorios.";
+                    grecaptcha.reset(); // Restablecer reCAPTCHA
                     return;
                 }
         
@@ -97,10 +98,11 @@
                     mensajeEstado.style.display = "block";
                     mensajeEstado.style.color = result.success ? "green" : "red";
                     mensajeEstado.textContent = result.success || result.error;
-        
+                    
+                    grecaptcha.reset(); // Restablecer reCAPTCHA
+                    
                     // Si el mensaje se envió con éxito, limpiar el formulario
                     if (result.success) {
-                        grecaptcha.reset(); // Restablecer reCAPTCHA
                         form.reset();
                     }
         
