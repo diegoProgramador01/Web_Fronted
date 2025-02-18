@@ -42,34 +42,44 @@
             <label for="message">Mensaje:</label>
             <textarea id="message" name="message" rows="5" placeholder="Tu mensaje..."></textarea>
 
+            <!-- reCAPTCHA -->
+            <div class="g-recaptcha" data-sitekey="6LeF3NoqAAAAADrUSRzgmLggK0DDKRWURX9ZgZ5O">recaptcha</div>
+
             <button type="submit" class="btn-enviar">Enviar</button>
         </form>
         <p id="mensaje-estado" style="display: none; font-weight: bold; margin-top: 20px;"></p>
 
     </section>
 
+    <!-- Cargar el script de Google reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>     
     <script src="js/tema.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const form = document.querySelector(".form-contacto");
             const mensajeEstado = document.getElementById("mensaje-estado");
-
-            if (!form) {
-                console.error("Formulario no encontrado en el DOM.");
-                return;
-            }
         
             form.addEventListener("submit", async function(event) {
-                event.preventDefault(); // Evita que el formulario se envíe como GET
+                event.preventDefault(); // Evita que la página se recargue
         
                 const name = document.getElementById("name").value.trim();
                 const email = document.getElementById("email").value.trim();
                 const message = document.getElementById("message").value.trim();
+                const recaptchaResponse = grecaptcha.getResponse(); // Captura el token de reCAPTCHA
         
+                // Validar que los campos no estén vacíos
                 if (!name || !email || !message) {
-                    mensajeEstado.style.color = "red";
                     mensajeEstado.style.display = "block";
-                    mensajeEstado.textContent = "Por favor, completa todos los campos.";
+                    mensajeEstado.style.color = "red";
+                    mensajeEstado.textContent = "Todos los campos son obligatorios.";
+                    grecaptcha.reset(); // Restablecer reCAPTCHA
+                    return;
+                }
+        
+                if (!recaptchaResponse) {
+                    mensajeEstado.style.display = "block";
+                    mensajeEstado.style.color = "red";
+                    mensajeEstado.textContent = "Por favor, verifica que no eres un robot.";
                     return;
                 }
         
@@ -79,21 +89,23 @@
                         headers: {
                             "Content-Type": "application/json"
                         },
-                        body: JSON.stringify({ name, email, message })
+                        body: JSON.stringify({ name, email, message, recaptchaToken: recaptchaResponse })
                     });
         
-                    if (!response.ok) {
-                        throw new Error("Error en la respuesta del servidor.");
+                    const result = await response.json();
+        
+                    // Mostrar mensaje en la pantalla con el texto del error o éxito
+                    mensajeEstado.style.display = "block";
+                    mensajeEstado.style.color = result.success ? "green" : "red";
+                    mensajeEstado.textContent = result.success || result.error;
+                    
+                    grecaptcha.reset(); // Restablecer reCAPTCHA
+                    
+                    // Si el mensaje se envió con éxito, limpiar el formulario
+                    if (result.success) {
+                        form.reset();
                     }
         
-                    const result = await response.json();
-                    mensajeEstado.style.color = "green";
-                    mensajeEstado.style.display = "block";
-                    mensajeEstado.textContent = "Mensaje enviado correctamente.";
-
-                    //Limpiar formulario después de enviar
-                    form.reset();
-
                 } catch (error) {
                     console.error("Error al enviar el formulario:", error);
                     mensajeEstado.style.display = "block";
@@ -103,6 +115,7 @@
             });
         });
         </script>
+        
         
 </body>
 </html>
