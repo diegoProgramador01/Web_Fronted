@@ -242,7 +242,23 @@ canvas {
     z-index: -1; /* Pone el canvas al detrás de todo */
 }
 
+.recaptcha-container {
+    transform: scale(0.85); /* Escala el tamaño a un 85% */
+   /* Mantiene la alineación centrada */
+    display: flex;
+    justify-content: center;
+}
 
+/* Responsividad */
+@media (max-width: 768px) {
+    /* Reducir el tamaño del reCAPTCHA */
+    .recaptcha-container {
+    transform: scale(0.70); /* Escala el tamaño a un 85% */
+   /* Mantiene la alineación centrada */
+    display: flex;
+    justify-content: center;
+    }
+}
 
 
 
