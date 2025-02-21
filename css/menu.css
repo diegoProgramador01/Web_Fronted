@@ -1,0 +1,15 @@
+/* Icono del menú */
+.menu-icon {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.menu-icon img {
+    width: 100%;
+    height: auto;
+}
+
