@@ -10,6 +10,7 @@
     --tipografia: 'Roboto Mono', serif;
     --particulas-color: #c7cedb;
     --particulas-linea-color: rgb(199, 206, 219);
+    --pedir-cita-color: #e73d67;
 }
 
 .dark-theme {
@@ -119,6 +120,13 @@ textarea:-webkit-autofill {
     right: 20px; /* Posición a la derecha */
     justify-content: flex-end; /* Alinea los elementos desde la derecha */
     align-items: center; /* Centra los elementos verticalmente */
+}
+
+/* Nueva clase para el botón "Pedir cita" alineado a la izquierda */
+.left-bar {
+    position: fixed;
+    top: 20px;
+    left: 20px; /* Lo posiciona en la esquina superior izquierda */
 }
 
 /* Sección de Proyectos */
@@ -260,6 +268,23 @@ canvas {
     }
 }
 
+
+/* Pedir cita (Calendario) */
+.btn-cita {
+    left: 20px;
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--color-primario);
+    background-color: var(--pedir-cita-color);
+    color: var(--color-primario);
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.5s ease;
+}
+
+.btn-cita:hover {
+    background-color: var(--color-primario);
+    color: var(--color-texto);
+}
 
 
 

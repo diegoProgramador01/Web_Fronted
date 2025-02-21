@@ -1,0 +1,8 @@
+body {
+    text-align: center;
+    margin: 20px;
+}
+#calendar {
+    max-width: 900px;
+    margin: auto;
+}
